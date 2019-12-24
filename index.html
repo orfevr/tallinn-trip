@@ -2,25 +2,103 @@
 <html>
   <head>
     <title>Tallinn Trip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=680, initial-scale=1"> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+
+    <script>
+
+      const arrivalDate = new Date(2019, 11, 28, 20, 25);
+
+      const onLoad = () => {
+        const days1Placeholder = document.getElementById('days-1')
+        const days2Placeholder = document.getElementById('days-2')
+        const hours1Placeholder = document.getElementById('hours-1')
+        const hours2Placeholder = document.getElementById('hours-2')
+        const minutes1Placeholder = document.getElementById('minutes-1')
+        const minutes2Placeholder = document.getElementById('minutes-2')
+        const seconds1Placeholder = document.getElementById('seconds-1')
+        const seconds2Placeholder = document.getElementById('seconds-2')
+
+        const setNumbers = (firstNumberPlaceholderId, secondNumberPlaceholderId, value) => {
+          if (value < 10) {
+            firstNumberPlaceholderId.innerText = 0
+            secondNumberPlaceholderId.innerText = value
+          } else {
+            const parts = value.toString().split('')
+            firstNumberPlaceholderId.innerText = parts[0]
+            secondNumberPlaceholderId.innerText = parts[1]
+          }
+        }
+
+        const id = setInterval(() => {
+          const timeLeft = arrivalDate - new Date();
+          const parts = getParts(timeLeft)
+          setNumbers(days1Placeholder, days2Placeholder, parts.days);
+          setNumbers(hours1Placeholder, hours2Placeholder, parts.hours);
+          setNumbers(minutes1Placeholder, minutes2Placeholder, parts.minutes);
+          setNumbers(seconds1Placeholder, seconds2Placeholder, parts.seconds);
+          //console.log(parts)
+        }, 1000);
+        //clearInterval(id);
+      }
+
+      window.onload = onLoad;
+
+      function getParts(timeLeft) {
+        let diff = timeLeft;
+        let milliseconds,seconds,minutes,hours,days;
+        diff=(diff-(milliseconds = diff % 1000))/1000;
+        diff=(diff-(seconds = diff % 60))/60;
+        diff=(diff-(minutes = diff % 60))/60;
+        days=(diff-(hours = diff % 24))/24;
+
+        return { days, hours, minutes, seconds};
+      }
+
+    </script>
   </head>
   <body>
-    <h1>Static Site</h1>
-    <h2>
-      Deployed with
-      <a href="https://zeit.co/docs" target="_blank" rel="noreferrer noopener"
-        >ZEIT Now</a
-      >!
-    </h2>
-    <p>
-      <a
-        href="https://github.com/zeit/now-examples/tree/master/vanilla"
-        target="_blank"
-        rel="noreferrer noopener"
-        >This project</a
-      >
-      includes two files. A static <code>index.html</code> file as the homepage,
-      and a <code>style.css</code> file for styling.
-    </p>
+    <h2>Fun Time Starts Soon</h2>
+    <div class="time-left-container">
+      <!-- Days -->
+      <div class="time-component">
+        <div class="title">Days</div>
+        <div class="numbers">
+          <div id="days-1" class="number">0</div>
+          <div id="days-2" class="number">0</div>
+        </div>
+      </div>
+
+      <!-- Hours -->
+      <div class="time-component">
+        <div class="title">Hours</div>
+        <div class="numbers">
+          <span id="hours-1" class="number">0</span>
+          <span id="hours-2" class="number">0</span>
+        </div>
+      </div>
+
+      <!-- Minutes -->
+      <div class="time-component">
+        <div class="title">Minutes</div>
+        <div class="numbers">
+          <span id="minutes-1" class="number">0</span>
+          <span id="minutes-2" class="number">0</span>
+        </div>
+      </div>
+
+      <!-- Seconds -->
+      <div class="time-component">
+        <div class="title">Seconds</div>
+        <div class="numbers">
+          <span id="seconds-1" class="number">0</span>
+          <span id="seconds-2" class="number">0</span>
+        </div>
+      </div>
+
+    </div>
   </body>
+
 </html>
